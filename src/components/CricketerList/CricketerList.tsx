@@ -5,16 +5,16 @@ import TableCell from '@mui/material/TableCell';
 import { PlayerTypes } from '@/API/get-players';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
-import Box from '@mui/material/Box';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { CricketerListProps, TorderBy } from './CricketerList.Types';
 import { TableHeaderKeys } from './CricketerList.Const';
 import TableSortLabel from '@mui/material/TableSortLabel';
-import { visuallyHidden } from '@mui/utils';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import Input from '@mui/material/Input';
+import { Link } from 'react-router-dom';
 
 const orderByKeys = ['name', 'dob', 'rank'];
 const playerTypes = ['batsman', 'bowler', 'allRounder', 'wicketKeeper'];
@@ -24,6 +24,8 @@ const CricketerList = ({
   orderBy,
   order,
   filterByType,
+  searchByName,
+  setSearchByName,
   onRequestSort,
   onRequestFilterType,
 }: CricketerListProps) => {
@@ -32,9 +34,11 @@ const CricketerList = ({
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -46,20 +50,27 @@ const CricketerList = ({
                 sortDirection={orderBy === headerKey ? order : false}
               >
                 {orderByKeys.includes(headerKey) ? (
-                  <TableSortLabel
-                    active={orderBy === headerKey}
-                    direction={orderBy === headerKey ? order : 'asc'}
-                    onClick={() => onRequestSort(headerKey as TorderBy)}
-                  >
-                    {headerKey.toUpperCase()}
-                    {orderBy === headerKey ? (
-                      <Box component="span" sx={visuallyHidden}>
-                        {order === 'desc'
-                          ? 'sorted descending'
-                          : 'sorted ascending'}
-                      </Box>
-                    ) : null}
-                  </TableSortLabel>
+                  <>
+                    <TableSortLabel
+                      active={orderBy === headerKey}
+                      direction={orderBy === headerKey ? order : 'asc'}
+                      onClick={() => onRequestSort(headerKey as TorderBy)}
+                    >
+                      {headerKey.toUpperCase()}
+                    </TableSortLabel>
+                    {headerKey === 'name' && (
+                      <>
+                        &nbsp;
+                        <Input
+                          value={searchByName}
+                          placeholder="Search here"
+                          onChange={(e) => {
+                            setSearchByName(e.target.value);
+                          }}
+                        />
+                      </>
+                    )}
+                  </>
                 ) : headerKey === 'type' ? (
                   <>
                     <Button
@@ -118,7 +129,7 @@ const CricketerList = ({
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  {row.name}
+                  <Link to={`/cricketer/${row.id}`}>{row.name}</Link>
                 </TableCell>
                 <TableCell>{row.type || '-'}</TableCell>
                 <TableCell>{row.points || '-'}</TableCell>
