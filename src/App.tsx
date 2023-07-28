@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import ErrorPage from 'pages/ErrorPage';
-import CricketersPage from 'pages/CricketersPage';
-import CricketerDetailPage from 'pages/CricketerDetailPage';
+import ErrorPage from '@/pages/ErrorPage';
+import CricketersPage from '@/pages/CricketersPage';
+import CricketerDetailPage from '@/pages/CricketerDetailPage';
 import styled from '@emotion/styled';
 
 const RootContainer = styled.div`

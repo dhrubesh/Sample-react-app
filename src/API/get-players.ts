@@ -1,4 +1,4 @@
-import data from '@constants/players';
+import data from '@/constants/players';
 
 export type TMayBe<T> = T | null | undefined;
 
