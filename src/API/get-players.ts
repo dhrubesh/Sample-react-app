@@ -6,6 +6,11 @@ export type PlayerTypes = TMayBe<
   'batsman' | 'bowler' | 'allRounder' | 'wicketKeeper'
 >;
 
+export interface TPlayerDetailer {
+  player: TPlayer;
+  filteredPlayerType: TPlayer[];
+}
+
 export type TPlayer = {
   id?: TMayBe<string>;
   name?: TMayBe<string>;
@@ -16,7 +21,7 @@ export type TPlayer = {
   dob?: TMayBe<number>;
 };
 
-const getPlayers = (): Promise<TPlayer[]> => {
+export const getPlayers = (): Promise<TPlayer[]> => {
   return Promise.resolve<TPlayer[]>(
     (data as TPlayer[])
       .sort((a, b) => {
@@ -31,5 +36,3 @@ const getPlayers = (): Promise<TPlayer[]> => {
       }))
   );
 };
-
-export default getPlayers;

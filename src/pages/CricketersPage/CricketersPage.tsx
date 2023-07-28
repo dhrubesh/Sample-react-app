@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { CricketerList } from '@/components';
-import getPlayers, { TPlayer } from '@/API/get-players';
+import { TPlayer, getPlayers } from '@/API/get-players';
 import { CustomTablePagination } from './CricketersPage.Styled';
 import Paper from '@mui/material/Paper';
 import {
