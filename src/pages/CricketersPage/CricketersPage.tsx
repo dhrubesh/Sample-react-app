@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { CricketerList } from '@/components';
 import { TPlayer, getPlayers } from '@/API/get-players';
-import { CustomTablePagination } from './CricketersPage.Styled';
-import Paper from '@mui/material/Paper';
+import * as Styled from './CricketersPage.Styled';
 import {
   TorderBy,
   TLocalStorageVal,
@@ -100,9 +99,9 @@ const CricketersPage = () => {
   ]);
 
   return (
-    <>
-      <Paper>
-        <CustomTablePagination
+    <Styled.Container>
+      <Styled.Paper>
+        <Styled.CustomTablePagination
           rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
           colSpan={3}
           count={data.length}
@@ -120,7 +119,7 @@ const CricketersPage = () => {
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-      </Paper>
+      </Styled.Paper>
       <CricketerList
         players={
           rowsPerPage > 0
@@ -135,7 +134,7 @@ const CricketersPage = () => {
         onRequestFilterType={setFilterByType}
         filterByType={filterByType}
       />
-    </>
+    </Styled.Container>
   );
 };
 

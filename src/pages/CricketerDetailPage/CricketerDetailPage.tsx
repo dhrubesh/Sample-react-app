@@ -1,10 +1,10 @@
 import { getPlayers, TPlayerDetailer } from '@/API/get-players';
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
 import CardContent from '@mui/material/CardContent';
 import { deepOrange } from '@mui/material/colors';
+import * as Styled from './CricketerDetailPage.Styled';
 
 import Avatar from '@mui/material/Avatar';
 
@@ -31,34 +31,64 @@ const CricketerDetailPage = () => {
     ? new Date(playerDetails.dob).toLocaleDateString()
     : '-';
   const age = playerDetails.dob
-    ? new Date(playerDetails.dob).getFullYear() - new Date().getFullYear()
+    ? new Date().getFullYear() - new Date(playerDetails.dob).getFullYear()
     : '-';
+
   return (
-    <>
-      <Link to="/">Go to list</Link>
-      <Card sx={{ maxWidth: 350 }}>
+    <Styled.Container>
+      <Styled.Link to="/">Go Back to the list</Styled.Link>
+      <Styled.DetailCard sx={{ maxWidth: '50%' }}>
         <CardContent>
           <Box display={'flex'}>
+            <Styled.Header>{playerDetails.name}</Styled.Header>{' '}
             <Avatar sx={{ bgcolor: deepOrange[500] }}>
               {playerDetails.rank}
             </Avatar>
-            <div>{playerDetails.name}</div>
-            <div>{playerDetails.type}</div>
-            <div>{playerDetails.points}</div>
-            <div>{dob}</div>
-            <div>{age}</div>
           </Box>
-          {playerDetails.description}
+          <Box display={'flex'} mt={4}>
+            <Box width="60%" mr={'auto'}>
+              <Styled.Description>
+                {playerDetails.description}
+              </Styled.Description>
+            </Box>
+            <Box>
+              <Styled.Details>
+                <div className="value">{playerDetails.type}</div>
+                <div className="property">Player Type</div>
+              </Styled.Details>
+              <Styled.Details>
+                <div className="value">{playerDetails.points}</div>
+                <div className="property">Points</div>
+              </Styled.Details>
+              <Styled.Details>
+                <div className="value">{dob}</div>
+                <div className="property">Date of Birth</div>
+              </Styled.Details>
+              <Styled.Details>
+                <div className="value">{age}</div>
+                <div className="property">Age</div>
+              </Styled.Details>
+            </Box>
+          </Box>
         </CardContent>
-      </Card>
-      <Card sx={{ maxWidth: 350 }}>
+      </Styled.DetailCard>
+      <Styled.ListCard sx={{ width: 350 }}>
         <CardContent>
+          <div className="header">People also looked into:</div>
           {filteredPlayerType?.map((similarPlayer) => {
-            return <div key={similarPlayer.id}>{similarPlayer.name}</div>;
+            return (
+              <Link
+                key={similarPlayer.id}
+                className="player"
+                to={`/cricketer/${similarPlayer.id}`}
+              >
+                {similarPlayer.name}
+              </Link>
+            );
           })}
         </CardContent>
-      </Card>
-    </>
+      </Styled.ListCard>
+    </Styled.Container>
   );
 };
 
